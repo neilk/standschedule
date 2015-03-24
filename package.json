@@ -1,0 +1,24 @@
+{
+  "name": "standschedule",
+  "description": "daemon to schedule habituation to a standing desk, slowly increasing standing times over weeks.",
+  "version": "0.0.1",
+  "author": "neilk@neilk.net",
+  "licenses": [
+    {
+      "type": "mit"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/neilk/standschedule.git"
+  },
+  "engines": [
+    "node"
+  ],
+  "main": "./main.js",
+  "dependencies": {
+    "node-schedule": "*"
+  },
+  "devDependencies": {
+  }
+}
