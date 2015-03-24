@@ -17,6 +17,7 @@
   ],
   "main": "./main.js",
   "dependencies": {
+    "isodate": "*",
     "node-schedule": "*"
   },
   "devDependencies": {
