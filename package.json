@@ -17,8 +17,10 @@
   ],
   "main": "./main.js",
   "dependencies": {
-    "isodate": "*",
-    "node-schedule": "*"
+    "moment": "*",
+    "minimist": "*",
+    "node-schedule": "*",
+    "sprintf-js": "*"
   },
   "devDependencies": {
   }

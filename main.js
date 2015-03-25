@@ -1,36 +1,72 @@
-var isodate = require('isodate'),
+var argv = require('minimist')(process.argv.slice(2)),
+    exec = require('child_process').exec,
+    moment = require('moment'),
     schedule = require('node-schedule');
+    sprintf = require('sprintf-js').sprintf;
 
 
-var config = require('./config.json');
+var APPLESCRIPT = '/usr/bin/osascript';
+var SCRIPT_TEMPLATE = 'display notification "%(text)s" with title "%(title)s" sound name "%(sound)s"';
 
-
-function log(s) {
-  var d = (new Date()).toISOString();
-  console.log( d + " " + s)
-}
 
 var callbacks = {
   up: function() {
-    log("up!");
+    console.log("up!");
+    toast("Desk up!", "Time to stand!", "BeepRising");
   },
   down: function() {
-    log("down!");
+    console.log("down!");
+    toast("Desk down!", "Time to sit.", "BeepFalling");
   }
 }
 
-var jobs = [];
+function toast(title, text, sound) {
+  var args = { title: title, text: text, sound: sound };
+  var script = sprintf(SCRIPT_TEMPLATE, args);
+  console.log(script);
+  exec('/usr/bin/osascript', ['-e', script]);
+}
 
-config.alerts.forEach(function(alert) {
-  var date = isodate(alert.date);
-  var job = schedule.scheduleJob(date, callbacks[alert.type]);
-  jobs.push(job);
-});
+function loadConfig(config) {
+  var jobCount = 0;
 
-console.log(jobs.length.toString() + " jobs scheduled.")
+  Object.keys(config).forEach(function(callbackName) {
+    var callback = callbacks[callbackName];
+    config[callbackName].forEach(function(dateStr) {
+      var date = moment(dateStr).toDate();
+      console.log('scheduled', date, callbackName);
+      var job = schedule.scheduleJob(date, callback);
+    })
+    jobCount++;
+  });
 
-(function wait() {
-  if (jobs.length) {
-    setTimeout(wait, 1000);
+  console.log(jobCount.toString() + " jobs scheduled.");
+}
+
+function getConfig(argv) {
+  var config = {};
+  if ('test' in argv) {
+    var now = moment();
+    config = {
+      up:   [ now.clone().add(2, 'seconds').format('YYYY-MM-DD HH:mm:ss') ],
+      down: [ now.clone().add(4, 'seconds').format('YYYY-MM-DD HH:mm:ss') ],
+    }
+    console.log(config);
+  } else {
+    var configFile = './config.json';
+    if ('config' in argv) {
+      configFile = argv['config'];
+    }
+    config = require(configFile);
   }
-})();
+  return config;
+}
+
+function waitForever() {
+  setTimeout(waitForever, 10000);
+}
+
+
+loadConfig(getConfig(argv));
+waitForever();
+
