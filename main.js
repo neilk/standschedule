@@ -24,6 +24,7 @@ function toast(title, text, sound) {
   var args = { title: title, text: text, sound: sound };
   var script = sprintf(SCRIPT_TEMPLATE, args);
   console.log(script);
+  // TODO this doesn't seem to do anything, although everything looks right. Do I want spawn instead?
   exec('/usr/bin/osascript', ['-e', script]);
 }
 
