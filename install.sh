@@ -1,3 +1,4 @@
 #!/bin/bash
 
-cp sounds/* /System/Library/Sounds
+sudo cp sounds/* /System/Library/Sounds
+cp *.plist ~/Library/LaunchAgents 
