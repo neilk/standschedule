@@ -1,9 +1,8 @@
 var argv = require('minimist')(process.argv.slice(2)),
-    exec = require('child_process').exec,
+    spawn = require('child_process').spawn,
     moment = require('moment'),
     schedule = require('node-schedule');
     sprintf = require('sprintf-js').sprintf;
-
 
 var APPLESCRIPT = '/usr/bin/osascript';
 var SCRIPT_TEMPLATE = 'display notification "%(text)s" with title "%(title)s" sound name "%(sound)s"';
@@ -24,8 +23,7 @@ function toast(title, text, sound) {
   var args = { title: title, text: text, sound: sound };
   var script = sprintf(SCRIPT_TEMPLATE, args);
   console.log(script);
-  // TODO this doesn't seem to do anything, although everything looks right. Do I want spawn instead?
-  exec('/usr/bin/osascript', ['-e', script]);
+  spawn('/usr/bin/osascript', ['-e', script]);
 }
 
 function loadConfig(config) {
