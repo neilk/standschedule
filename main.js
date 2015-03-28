@@ -66,7 +66,7 @@ function getConfig(argv) {
       name: 'standschedule',
       streams: [{
         type: 'rotating-file',
-        path: '/var/Log/standschedule.Log',
+        path: '/var/log/standschedule.log',
         period: '1d',   // daily rotation
         count: 3        // keep 3 back copies
       }]
