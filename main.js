@@ -2,7 +2,7 @@ var argv = require('minimist')(process.argv.slice(2)),
     bunyan = require('bunyan'),
     spawn = require('child_process').spawn,
     moment = require('moment'),
-    schedule = require('node-schedule');
+    schedule = require('node-schedule'),
     sprintf = require('sprintf-js').sprintf;
 
 var APPLESCRIPT = '/usr/bin/osascript';
