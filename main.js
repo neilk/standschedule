@@ -8,7 +8,7 @@ var argv = require('minimist')(process.argv.slice(2)),
 var APPLESCRIPT = '/usr/bin/osascript';
 var SCRIPT_TEMPLATE = 'display notification "%(text)s" with title "%(title)s" sound name "%(sound)s"';
 
-var Log;
+var Log = bunyan.createLogger({name: 'standschedule'})
 var StartMoment = moment();
 
 var callbacks = {
@@ -54,23 +54,12 @@ function getConfig(argv) {
             ],
       down: [ StartMoment.clone().add(4, 'seconds').format('YYYY-MM-DD HH:mm:ss') ],
     }
-    Log = bunyan.createLogger({name: 'standschedule'})
-    Log.info(config);
   } else {
     var configFile = './config.json';
     if ('config' in argv) {
       configFile = argv['config'];
     }
     config = require(configFile);
-    Log = bunyan.createLogger({
-      name: 'standschedule',
-      streams: [{
-        type: 'rotating-file',
-        path: '/var/log/standschedule.log',
-        period: '1d',   // daily rotation
-        count: 3        // keep 3 back copies
-      }]
-    });
   }
   return config;
 }
@@ -79,12 +68,6 @@ function waitForever() {
   setTimeout(waitForever, 10000);
 }
 
-process.on('SIGINT', function() {
-  Log.info('Shutting down from SIGINT');
-  process.exit();
-}
-
-Log.info(sprintf('PID: %d', process.pid);
 loadConfig(getConfig(argv));
 waitForever();
 
