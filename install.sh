@@ -1,4 +1,8 @@
 #!/bin/bash
 
 sudo cp sounds/* /System/Library/Sounds
-cp *.plist ~/Library/LaunchAgents 
+
+launchconfig=net.neilk.standschedule.plist
+cp $launchconfig ~/Library/LaunchAgents 
+launchctl unload $launchconfig
+launchctl load -w $launchconfig
