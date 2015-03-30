@@ -79,6 +79,11 @@ function waitForever() {
   setTimeout(waitForever, 10000);
 }
 
+process.on('SIGINT', function() {
+  Log.info('Shutting down from SIGINT');
+  process.exit();
+}
+
 Log.info(sprintf('PID: %d', process.pid);
 loadConfig(getConfig(argv));
 waitForever();
