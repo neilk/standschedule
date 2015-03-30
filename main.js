@@ -79,7 +79,7 @@ function waitForever() {
   setTimeout(waitForever, 10000);
 }
 
-
+Log.info(sprintf('PID: %d', process.pid);
 loadConfig(getConfig(argv));
 waitForever();
 
