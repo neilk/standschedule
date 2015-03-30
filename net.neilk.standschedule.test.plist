@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>net.neilk.standschedule.test</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/usr/local/bin/node</string>
+        <string>/Users/neilk/projects/standschedule/main.js</string>
+        <string>--test</string>
+    </array>
+    <key>StandardErrorPath</key>
+    <string>/Users/neilk/Library/Logs/standschedule_err.log</string>
+    <key>StandardOutPath</key>
+    <string>/Users/neilk/Library/Logs/standschedule.log</string>
+    <key>KeepAlive</key>
+    <true/>
+    <key>RunAtLoad</key>
+    <true/>
+</dict>
+</plist>
